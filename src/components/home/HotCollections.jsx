@@ -101,34 +101,56 @@ const HotCollections = () => {
                 ))
               : collections.map((item, idx) => (
                   <div key={item.id ?? item.nftId ?? idx} className="px-1">
-                    <div className="nft__item">
-                      <div className="author_list_pp">
-                        <a
-                          href={`${PROD_BASE}/author/${item.authorId}`}
-                          title={`Creator: ${item.author || "Unknown"}`}
-                        >
-                          <img
-                            className="lazy pp-coll"
-                            src={item.authorImage || AuthorImage}
-                            alt=""
-                          />
-                          <i className="fa fa-check"></i>
-                        </a>
-                      </div>
-
-                      <div className="nft__item_wrap">
+                    <div className="nft_coll" style={{ textAlign: "center" }}>
+                      <div
+                        className="nft_wrap"
+                        style={{ position: "relative" }}
+                      >
                         <a href={`${PROD_BASE}/item-details/${item.nftId}`}>
                           <img
                             src={item.nftImage || nftImage}
-                            className="lazy img-fluid"
                             alt={item.title || ""}
+                            className="lazy img-fluid"
+                            style={{
+                              width: "100%",
+                              borderRadius: "12px",
+                              display: "block",
+                            }}
                           />
                         </a>
+
+                        <div
+                          className="nft_coll_pp"
+                          style={{
+                            position: "absolute",
+                            top: "165px",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            zIndex: 10,
+                          }}
+                        >
+                          <a href={`${PROD_BASE}/author/${item.authorId}`}>
+                            <img
+                              src={item.authorImage || AuthorImage}
+                              alt="author"
+                              style={{
+                                width: "60px",
+                                height: "60px",
+                                borderRadius: "50%",
+                                border: "3px solid #fff",
+                              }}
+                            />
+                            <i className="fa fa-check"></i>
+                          </a>
+                        </div>
                       </div>
 
-                      <div className="nft__item_info">
+                      <div
+                        className="nft_coll_info"
+                        style={{ marginTop: "40px" }}
+                      >
                         <a href={`${PROD_BASE}/item-details/${item.nftId}`}>
-                          <h4>{item.title || item.name || "Untitled"}</h4>
+                          <h4>{item.title || "Untitled"}</h4>
                         </a>
                         <span>ERC-{item.code ?? "192"}</span>
                       </div>
@@ -228,4 +250,3 @@ const sliderSettings = {
 };
 
 export default HotCollections;
-
