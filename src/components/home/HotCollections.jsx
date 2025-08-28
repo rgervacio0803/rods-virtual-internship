@@ -209,7 +209,7 @@ const HotCollections = () => {
                           to={`/item-details?nftId=${item.nftId}`}
                           style={{ textDecoration: "none", color: "inherit" }}
                         >
-                          <h4 style={{ margin: 0, fontWeight: 600 }}>
+                          <h4 style={{ margin: 0, fontWeight: 700 }}>
                             {" "}
                             {item.title || item.name || "Untitled"}{" "}
                           </h4>
