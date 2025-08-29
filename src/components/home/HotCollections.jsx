@@ -169,7 +169,7 @@ const HotCollections = () => {
                           zIndex: 5,
                         }}
                       >
-                        <Link to={`/author/${item.authorId}`} title="Creator">
+                        <Link to={`/author?authorId=${item.authorId}`} title="Creator">
                           <img
                             src={item.authorImage || AuthorImage}
                             alt="author"
@@ -206,7 +206,7 @@ const HotCollections = () => {
 
                       <div style={{ padding: "44px 16px 20px" }}>
                         <Link
-                          to={`/item-details/${item.nftId}`}
+                          to={`/item-details?nftId=${item.nftId}`}
                           style={{ textDecoration: "none", color: "inherit" }}
                         >
                           <h4 style={{ margin: 0, fontWeight: 700 }}>
