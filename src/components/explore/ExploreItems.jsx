@@ -177,71 +177,69 @@ const ExploreItems = () => {
                 </div>
               </div>
             ))
-          : sortedItems.slice(0, visible).map((it, index) => (
-              <div
-                key={it.nftId ?? index}
-                className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
-                style={{ display: "block" }}
-              >
-                <div className="nft__item">
-                  <div className="author_list_pp">
-                    <Link to={`/author?authorId=${item.authorId}`} title="Creator">
-                      <img
-                        className="lazy"
-                        src={it.authorImage || AuthorImage}
-                        alt=""
-                        style={{
-                          width: 50,
-                          height: 50,
-                          borderRadius: "50%",
-                          objectFit: "cover",
-                        }}
-                      />
-                      <i className="fa fa-check"></i>
-                    </Link>
-                  </div>
+          : sortedItems.slice(0, visible).map((item, index) => (
+  <div
+    key={item.nftId ?? index}
+    className="d-item col-lg-3 col-md-6 col-sm-6 col-xs-12"
+    style={{ display: "block" }}
+  >
+    <div className="nft__item">
+      <div className="author_list_pp">
+        <Link to={`/author?authorId=${item.authorId}`} title="Creator">
+          <img
+            className="lazy"
+            src={item.authorImage || AuthorImage}
+            alt=""
+            style={{
+              width: 50,
+              height: 50,
+              borderRadius: "50%",
+              objectFit: "cover",
+            }}
+          />
+          <i className="fa fa-check"></i>
+        </Link>
+      </div>
 
-                  <div
-                    className="nft__item_wrap"
-                    style={{ position: "relative" }}
-                  >
-                    <Countdown item={it} />
-                    <div className="nft__item_extra">
-                      <div className="nft__item_buttons">
-                        <button>Buy Now</button>
-                        <div className="nft__item_share">
-                          <h4>Share</h4>
-                          <a href="#" rel="noreferrer">
-                            <i className="fa fa-facebook fa-lg"></i>
-                          </a>
-                          <a href="#" rel="noreferrer">
-                            <i className="fa fa-twitter fa-lg"></i>
-                          </a>
-                          <a href="#">
-                            <i className="fa fa-envelope fa-lg"></i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <Link to={`/item-details?nftId=${item.nftId}`}>
-                      <img
-                        src={it.nftImage || nftImage}
-                        className="lazy nft__item_preview"
-                        alt={it.title || ""}
-                      />
-                    </Link>
-                  </div>
+      <div className="nft__item_wrap" style={{ position: "relative" }}>
+        <Countdown item={item} />
+        <div className="nft__item_extra">
+          <div className="nft__item_buttons">
+            <button>Buy Now</button>
+            <div className="nft__item_share">
+              <h4>Share</h4>
+              <a href="#" rel="noreferrer">
+                <i className="fa fa-facebook fa-lg"></i>
+              </a>
+              <a href="#" rel="noreferrer">
+                <i className="fa fa-twitter fa-lg"></i>
+              </a>
+              <a href="#">
+                <i className="fa fa-envelope fa-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
 
-                  <div className="nft__item_info">
-                    <Link to={`/item-details/${it.nftId}`}>
-                      <h4>{it.title || "Untitled"}</h4>
-                    </Link>
-                    <div className="nft__item_price">
-                      {typeof it.price === "number" ? `${it.price} ETH` : "—"}
-                    </div>
-                    <div className="nft__item_like">
-                      <i className="fa fa-heart"></i>
-                      <span>{it.likes ?? 0}</span>
+        <Link to={`/item-details?nftId=${item.nftId}`}>
+          <img
+            src={item.nftImage || nftImage}
+            className="lazy nft__item_preview"
+            alt={item.title || ""}
+          />
+        </Link>
+      </div>
+
+      <div className="nft__item_info">
+        <Link to={`/item-details?nftId=${item.nftId}`}>
+          <h4>{item.title || "Untitled"}</h4>
+        </Link>
+        <div className="nft__item_price">
+          {typeof item.price === "number" ? `${item.price} ETH` : "—"}
+        </div>
+        <div className="nft__item_like">
+          <i className="fa fa-heart"></i>
+          <span>{item.likes ?? 0}</span>
                     </div>
                   </div>
                 </div>
