@@ -1,130 +1,105 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useSearchParams, Link } from "react-router-dom";
-import nftImage from "../images/nftImage.jpg";
-import defaultAvatar from "../images/author_thumbnail.jpg";
-import defaultBanner from "../images/author_banner.jpg";
+import React from "react";
+import { Link } from "react-router-dom";
 
-export default function AuthorPage() {
-  const [sp] = useSearchParams();
-  const authorId = sp.get("authorId");
-
-  const [author, setAuthor] = useState(null);
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    async function fetch() {
-      if (!authorId) {
-        setError("Missing authorId—use `/author?authorId=123`");
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const { data } = await axios.get(
-          "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors",
-          { params: { author: authorId } }
-        );
-        setAuthor(data);
-        setItems(Array.isArray(data.nftCollection) ? data.nftCollection : []);
-      } catch (e) {
-        console.error("Failed to fetch author data:", e);
-        setError("Could not load author data.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetch();
-  }, [authorId]);
-
-  if (loading) return <div>Loading author...</div>;
-  if (error) return <div style={{ color: "red" }}>{error}</div>;
-  if (!author) return <div>Author not found.</div>;
-
-  const {
-    name,
-    authorName,
-    avatar,
-    bannerImage,
-    username,
-    wallet,
-    followers,
-  } = author;
+export default function AuthorItems({ items = [], authorImage }) {
+  if (!items || items.length === 0) return <div>No items for this author.</div>;
 
   return (
-    <div id="wrapper">
-      <div className="no-bottom no-top" id="content">
-        <section
-          id="profile_banner"
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+        gap: 24,
+      }}
+    >
+      {items.map((item) => (
+        <div
+          key={item.nftId}
           style={{
-            background: `url(${bannerImage || defaultBanner}) top / cover no-repeat`,
-            height: 300,
+            border: "1px solid #eee",
+            borderRadius: 12,
+            padding: 12,
+            background: "#fff",
           }}
-        />
-        <section>
-          <div className="container" style={{ padding: "20px 0" }}>
-            <div className="profile_avatar">
-              <img
-                src={avatar || defaultAvatar}
-                alt={name || authorName || "Author"}
-                style={{
-                  width: 100,
-                  height: 100,
-                  borderRadius: "50%",
-                  objectFit: "cover",
-                }}
-              />
-              <i className="fa fa-check" style={{ marginLeft: "-18px", marginTop: "70px" }} />
-              <h2>{name || authorName || "Unnamed Author"}</h2>
-              {username && <div>@{username}</div>}
-              {followers != null && <div>{followers} followers</div>}
-              {wallet && (
-                <div>
-                  <span>{wallet}</span>
-                  <button
-                    onClick={() => navigator.clipboard?.writeText(wallet)}
-                    style={{ marginLeft: 10 }}
-                  >
-                    Copy
-                  </button>
-                </div>
-              )}
+        >
+          <div style={{ position: "relative", marginBottom: 10 }}>
+            <div style={{ position: "absolute", top: 10, left: 10, zIndex: 2 }}>
+              <div style={{ position: "relative" }}>
+                <img
+                  src={authorImage}
+                  alt="author"
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    border: "2px solid #fff",
+                    objectFit: "cover",
+                    boxShadow: "0 2px 6px rgba(0,0,0,.15)",
+                  }}
+                />
+                <span
+                  style={{
+                    position: "absolute",
+                    right: -2,
+                    bottom: -2,
+                    width: 14,
+                    height: 14,
+                    borderRadius: "50%",
+                    background: "#7C6CF1",
+                    color: "#fff",
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 9,
+                    fontWeight: 700,
+                    border: "1px solid #fff",
+                  }}
+                >
+                  ✓
+                </span>
+              </div>
             </div>
 
-            <h3 style={{ marginTop: 24 }}>Items</h3>
-            {items.length === 0 ? (
-              <div>No items for this author.</div>
-            ) : (
-              <div className="row" style={{ gap: 12 }}>
-                {items.map((it, idx) => (
-                  <div key={it.nftId ?? idx} style={{ flex: "1 1 calc(25% - 12px)" }}>
-                    <div className="nft__item">
-                      <Link to={`/item-details?nftId=${it.nftId}`}>
-                        <img
-                          src={it.nftImage || nftImage}
-                          alt={it.title || ""}
-                          style={{ width: "100%", borderRadius: 8 }}
-                        />
-                      </Link>
-                      <Link to={`/item-details?nftId=${it.nftId}`}>
-                        <h4 style={{ margin: "8px 0 4px" }}>{it.title || "Untitled"}</h4>
-                      </Link>
-                      <div style={{ fontSize: 14 }}>
-                        {typeof it.price === "number" ? `${it.price} ETH` : "—"}
-                      </div>
-                      <div style={{ fontSize: 12, color: "#666" }}>
-                        <i className="fa fa-heart" /> {it.likes ?? 0}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              style={{
+                position: "absolute",
+                top: 12,
+                left: 60,
+                zIndex: 2,
+                display: "flex",
+                alignItems: "center",
+                gap: 6,
+                background: "#fff",
+                padding: "4px 8px",
+                borderRadius: 16,
+                boxShadow: "0 1px 3px rgba(0,0,0,.1)",
+                fontSize: 13,
+                color: "#333",
+              }}
+            >
+              <i className="fa fa-heart" style={{ color: "#e74c3c" }} />
+              <span>{item.likes ?? 0}</span>
+            </div>
+
+            <Link to={`/item-details?nftId=${item.nftId}`}>
+              <img
+                src={item.nftImage}
+                alt={item.title || ""}
+                style={{ width: "100%", borderRadius: 8, display: "block" }}
+              />
+            </Link>
           </div>
-        </section>
-      </div>
+
+          <Link
+            to={`/item-details?nftId=${item.nftId}`}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
+            <h4 style={{ margin: "6px 0 4px" }}>{item.title || "Untitled"}</h4>
+          </Link>
+          <div style={{ fontSize: 14 }}>
+            {typeof item.price === "number" ? `${item.price} ETH` : "—"}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
