@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 export default function AuthorItems({ items = [], authorImage = "" }) {
+  console.log("AuthorItems received:", items.length, "items");
+
   if (!Array.isArray(items) || items.length === 0) {
     return <div>No items for this author.</div>;
   }
