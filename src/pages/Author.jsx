@@ -24,7 +24,7 @@ export default function Author() {
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors",
           { params: { author: authorId } }
         );
-        console.log("Author API:", data);
+
         setAuthor(data ?? null);
       } catch (e) {
         console.error("Author fetch failed:", e);
