@@ -66,8 +66,8 @@ export default function Author() {
               src={author.authorImage}
               alt={author.authorName}
               style={{
-                width: 100,
-                height: 100,
+                width: 150,
+                height: 150,
                 borderRadius: "50%",
                 objectFit: "cover",
                 border: "4px solid #fff",
@@ -86,7 +86,13 @@ export default function Author() {
                     id="wallet"
                     className="profile_wallet"
                     title={author.address}
-                    style={{ fontFamily: "monospace" }}
+                    style={{
+                      fontFamily: "monospace",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      maxWidth: 200,
+                    }}
                   >
                     {author.address}
                   </span>
@@ -99,7 +105,7 @@ export default function Author() {
                     style={{
                       border: "1px solid #ddd",
                       borderRadius: 3,
-                      padding: "4px 8px",
+                      padding: "2px 8px",
                       background: "#fff",
                       cursor: "pointer",
                     }}
