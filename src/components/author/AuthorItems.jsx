@@ -1,82 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function AuthorItems({ items = [], authorImage }) {
-  if (!items || items.length === 0) return <div>No items for this author.</div>;
+export default function AuthorItems({ items = [], authorImage = "" }) {
+  if (!Array.isArray(items) || items.length === 0) {
+    return <div>No items for this author.</div>;
+  }
 
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
-        gap: 24,
+        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+        gap: 16,
       }}
     >
-      {items.map((item) => (
+      {items.map((item, idx) => (
         <div
-          key={item.nftId}
+          key={item.nftId ?? item.id ?? idx}
           style={{
             border: "1px solid #eee",
-            borderRadius: 12,
-            padding: 12,
+            borderRadius: 8,
+            padding: 8,
             background: "#fff",
           }}
         >
-          <div style={{ position: "relative", marginBottom: 10 }}>
-            <div style={{ position: "absolute", top: 10, left: 10, zIndex: 2 }}>
-              <div style={{ position: "relative" }}>
-                <img
-                  src={authorImage}
-                  alt="author"
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: "50%",
-                    border: "2px solid #fff",
-                    objectFit: "cover",
-                    boxShadow: "0 2px 6px rgba(0,0,0,.15)",
-                  }}
-                />
-                <span
-                  style={{
-                    position: "absolute",
-                    right: -2,
-                    bottom: -2,
-                    width: 14,
-                    height: 14,
-                    borderRadius: "50%",
-                    background: "#7C6CF1",
-                    color: "#fff",
-                    display: "grid",
-                    placeItems: "center",
-                    fontSize: 9,
-                    fontWeight: 700,
-                    border: "1px solid #fff",
-                  }}
-                >
-                  ✓
-                </span>
-              </div>
-            </div>
+          <div style={{ position: "relative", marginBottom: 8 }}>
+            {authorImage && (
+              <img
+                src={authorImage}
+                alt="author"
+                style={{
+                  position: "absolute",
+                  top: 10,
+                  left: 10,
+                  width: 36,
+                  height: 36,
+                  borderRadius: "50%",
+                  border: "2px solid #fff",
+                  objectFit: "cover",
+                  boxShadow: "0 2px 6px rgba(0,0,0,.15)",
+                  zIndex: 2,
+                }}
+              />
+            )}
 
             <div
               style={{
                 position: "absolute",
                 top: 12,
-                left: 60,
+                left: authorImage ? 56 : 12,
                 zIndex: 2,
-                display: "flex",
+                display: "inline-flex",
                 alignItems: "center",
                 gap: 6,
                 background: "#fff",
-                padding: "4px 8px",
-                borderRadius: 16,
-                boxShadow: "0 1px 3px rgba(0,0,0,.1)",
+                padding: "2px 8px",
+                borderRadius: 14,
+                border: "1px solid #eee",
                 fontSize: 13,
-                color: "#333",
               }}
             >
-              <i className="fa fa-heart" style={{ color: "#e74c3c" }} />
+              <i className="fa fa-heart" />
               <span>{item.likes ?? 0}</span>
             </div>
 
@@ -84,7 +68,7 @@ export default function AuthorItems({ items = [], authorImage }) {
               <img
                 src={item.nftImage}
                 alt={item.title || ""}
-                style={{ width: "100%", borderRadius: 8, display: "block" }}
+                style={{ width: "100%", borderRadius: 6, display: "block" }}
               />
             </Link>
           </div>
@@ -95,7 +79,7 @@ export default function AuthorItems({ items = [], authorImage }) {
           >
             <h4 style={{ margin: "6px 0 4px" }}>{item.title || "Untitled"}</h4>
           </Link>
-          <div style={{ fontSize: 14 }}>
+          <div>
             {typeof item.price === "number" ? `${item.price} ETH` : "—"}
           </div>
         </div>
