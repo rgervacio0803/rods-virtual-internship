@@ -12,7 +12,7 @@ export default function AuthorItems({ items = [], authorImage = "" }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+        gridTemplateColumns: "repeat(4, 1fr)",
         gap: 16,
       }}
     >
@@ -26,63 +26,74 @@ export default function AuthorItems({ items = [], authorImage = "" }) {
             background: "#fff",
           }}
         >
-          <div style={{ position: "relative", marginBottom: 8 }}>
-            {authorImage && (
-              <img
-                src={authorImage}
-                alt="author"
-                style={{
-                  position: "absolute",
-                  top: 10,
-                  left: 10,
-                  width: 36,
-                  height: 36,
-                  borderRadius: "50%",
-                  border: "2px solid #fff",
-                  objectFit: "cover",
-                  boxShadow: "0 2px 6px rgba(0,0,0,.15)",
-                  zIndex: 2,
-                }}
-              />
-            )}
+          {authorImage && (
+  <div style={{ position: "relative", display: "inline-block", marginBottom: 8 }}>
+    <img
+      src={authorImage}
+      alt="author"
+      style={{
+        width: 50,
+        height: 50,
+        borderRadius: "50%",
+        border: "2px solid #fff",
+        objectFit: "cover",
+        boxShadow: "0 2px 6px rgba(0,0,0,.15)",
+      }}
+    />
+    <span
+      style={{
+        position: "absolute",
+        bottom: -2,
+        right: -2,
+        width: 18,
+        height: 18,
+        borderRadius: "50%",
+        background: "#7C6CF1",
+        color: "#fff",
+        fontSize: 12,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        border: "2px solid #fff",
+      }}
+    >
+      ✓
+    </span>
+  </div>
+)}
 
-            <div
-              style={{
-                position: "absolute",
-                top: 12,
-                left: authorImage ? 56 : 12,
-                zIndex: 2,
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 6,
-                background: "#fff",
-                padding: "2px 8px",
-                borderRadius: 14,
-                border: "1px solid #eee",
-                fontSize: 13,
-              }}
-            >
-              <i className="fa fa-heart" />
-              <span>{item.likes ?? 0}</span>
-            </div>
-
-            <Link to={`/item-details?nftId=${item.nftId}`}>
-              <img
-                src={item.nftImage}
-                alt={item.title || ""}
-                style={{ width: "100%", borderRadius: 6, display: "block" }}
-              />
-            </Link>
-          </div>
+ 
+  <div style={{ marginBottom: 50 }}>
+    <Link to={`/item-details?nftId=${item.nftId}`}>
+      <img
+        src={item.nftImage}
+        alt={item.title || ""}
+        style={{ width: "100%", borderRadius: 6, display: "block" }}
+      />
+    </Link>
+  </div>
 
           <Link
             to={`/item-details?nftId=${item.nftId}`}
             style={{ textDecoration: "none", color: "inherit" }}
           >
-            <h4 style={{ margin: "6px 0 4px" }}>{item.title || "Untitled"}</h4>
+            <h4 style={{ margin: "0 0 5px" }}>{item.title || "Untitled"}</h4>
           </Link>
           <div>
             {typeof item.price === "number" ? `${item.price} ETH` : "—"}
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              gap: 6,
+              marginTop: 8,
+              fontSize: 12,
+            }}
+          >
+            <i className="fa fa-heart" />
+            <span>{item.likes ?? 0}</span>
           </div>
         </div>
       ))}
