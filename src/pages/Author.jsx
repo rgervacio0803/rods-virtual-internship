@@ -24,7 +24,7 @@ export default function Author() {
           "https://us-central1-nft-cloud-functions.cloudfunctions.net/authors",
           { params: { author: authorId } }
         );
-        console.log("Author API:", data);
+
         setAuthor(data ?? null);
       } catch (e) {
         console.error("Author fetch failed:", e);
@@ -66,30 +66,52 @@ export default function Author() {
               src={author.authorImage}
               alt={author.authorName}
               style={{
-                width: 100,
-                height: 100,
+                width: 150,
+                height: 150,
                 borderRadius: "50%",
                 objectFit: "cover",
                 border: "4px solid #fff",
               }}
             />
+            
+            <i
+              className="fa fa-check"
+              style={{
+                borderRadius: "100%",
+                color: "#fff",
+                display: "block",
+                margin: "110px 0 0 110px",
+                padding: "10px",
+                position: "absolute",
+                background: "#7C6CF1",
+              }}
+            />
             <div>
-              <h2 style={{ margin: 0 }}>{author.authorName}</h2>
+              <h2 style={{ margin: -5, fontSize: "24px", lineHeight: "1.3em" }}>{author.authorName}</h2>
               {author.tag && (
                 <div style={{ color: "#7C6CF1", fontWeight: 600 }}>
                   @{author.tag}
                 </div>
               )}
               {author.address && (
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ position: "relative", display: "inline-block" }}>
                   <span
                     id="wallet"
                     className="profile_wallet"
-                    title={author.address}
-                    style={{ fontFamily: "monospace" }}
+                    style={{
+                      color: "#727272",
+                      display: "block",
+                      float: "left",
+                      maxWidth: "200px",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      whiteSpace: "nowrap",
+                      fontFamily: "monospace",
+                    }}
                   >
                     {author.address}
                   </span>
+
                   <button
                     id="btn_copy"
                     title="Copy Text"
@@ -99,8 +121,16 @@ export default function Author() {
                     style={{
                       border: "1px solid #ddd",
                       borderRadius: 3,
-                      padding: "4px 8px",
-                      background: "#fff",
+                      display: "inline-block",
+                      fontSize: 12,
+                      lineHeight: "1em",
+                      outline: "none",
+                      padding: "4px 10px",
+                      position: "absolute",
+                      right: -45,
+                      top: "30%",
+                      transform: "translateY(-50%)",
+                      background: "#f0f0f0",
                       cursor: "pointer",
                     }}
                   >
