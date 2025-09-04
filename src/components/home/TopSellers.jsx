@@ -24,7 +24,7 @@ const TopSellers = () => {
 
   return (
     <section id="section-popular" className="pb-5">
-      <div className="container">
+      <div className="container" >
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
@@ -33,7 +33,7 @@ const TopSellers = () => {
             </div>
           </div>
 
-          <div className="col-md-12">
+          <div className="col-md-12" data-aos="fade-in">
             <ol className="author_list">
               {(loading ? new Array(12).fill(null) : sellers.slice(0, 12)).map(
                 (seller, index) =>
