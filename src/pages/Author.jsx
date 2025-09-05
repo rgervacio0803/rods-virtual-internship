@@ -46,7 +46,7 @@ export default function Author() {
       <section
         style={{
           background: `url(${bannerUrl}) center / cover no-repeat`,
-          height: 300,
+          height: 360,
         }}
       />
 
